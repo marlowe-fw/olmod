@@ -30,11 +30,64 @@ namespace GameMod.MPBotFramework
     }
 
 
+    [HarmonyPatch(typeof(Controls), "UpdateDevice")]
+    class PIgnoreControlsForGame1
+    {
+
+        // Ignore all input, brutal - but works.
+        static bool Prefix()
+        {
+
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(Controls), "MouseAim")]
+    class PIgnoreControlsForGame3
+    {
+        // Ignore all input, brutal - but works.
+        static bool Prefix()
+        {
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(Controls), "MouseAimCache")]
+    class PIgnoreControlsForGame4
+    {
+        // Ignore all input, brutal - but works.
+        static bool Prefix()
+        {
+            return false;
+        }
+    }
+
+
+    [HarmonyPatch(typeof(UIManager), "FindMousePosition")]
+    class PIgnoreControlsForGame2
+    {
+        // Ignore all input brutal - but works.
+        static bool Prefix()
+        {
+            return false;
+        }
+    }
+
+
+
     [HarmonyPatch(typeof(GameManager), "OnGUI")]
     class PClearIntro
     {
         private static readonly Texture2D backgroundTexture = Texture2D.whiteTexture;
         private static readonly GUIStyle textureStyle = new GUIStyle { normal = new GUIStyleState { background = backgroundTexture } };
+
+        private static readonly GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
+
+        private static bool initialized;
+
+        private static string msg = "Key press: NONE";
+
+        private static readonly Array keyCodes = Enum.GetValues(typeof(KeyCode));
 
         public static void DrawRect(Rect position, Color color, GUIContent content = null)
         {
@@ -43,6 +96,8 @@ namespace GameMod.MPBotFramework
             GUI.Box(position, content ?? GUIContent.none, textureStyle);
             GUI.backgroundColor = backgroundColor;
         }
+
+
 
         static void Postfix(GameManager __instance)
         {
@@ -54,8 +109,50 @@ namespace GameMod.MPBotFramework
                 DrawRect(new Rect(Screen.width / 2 , Screen.height / 2, Screen.width / 2, Screen.height / 2), Color.gray);
             }
 
+            if (!initialized)
+            {
+                labelStyle.normal.textColor = Color.green;
+                initialized = true;
+            }
+
+            
+
+            if (Input.anyKeyDown)
+            {
+                // TODO: read own input
+                foreach (KeyCode keyCode in keyCodes)
+                {
+                    if (Input.GetKey(keyCode))
+                    {
+                        msg = "Key press: " + keyCode;
+                        //Debug.Log("KeyCode down: " + keyCode);
+                        break;
+                    }
+                }
+            }
+
+
+            GUI.Label(new Rect(25, 25, 100, 30), msg, labelStyle);
+
+
         }
     }
+
+    /*
+    [HarmonyPatch(typeof(GameManager), "Update")]
+    class PIgnoreControlsForGame
+    {
+        static void Prefix()
+        {
+            Controls.ClearInputs();
+        }
+
+        static void Postfix()
+        {
+            Controls.ClearInputs();
+        }
+
+    }*/
 
 
 
