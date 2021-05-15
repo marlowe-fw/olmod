@@ -8,6 +8,12 @@ using UnityEngine;
 
 namespace GameMod.MPBotFramework
 {
+
+    public class BotControl
+    {
+        public static bool Enabled = false;
+    }
+
     // detect "frametime" "cheat code"
     [HarmonyPatch(typeof(PlayerShip), "Awake")]
     class PMoveAndShrinkGameView
@@ -29,6 +35,67 @@ namespace GameMod.MPBotFramework
         }
     }
 
+    [HarmonyPatch(typeof(GameManager), "Update")]
+    class PCaptureInput
+    {
+        private static readonly Array keyCodes = Enum.GetValues(typeof(KeyCode));
+
+        private static int a_count = 0;
+
+        static void Postfix()
+        {
+            if (Input.anyKeyDown)
+            {
+                // TODO: read own input
+                foreach (KeyCode keyCode in keyCodes)
+                {
+                    if (Input.GetKeyDown(keyCode))
+                    {
+                        PClearIntro.msg = "Key press: " + keyCode;
+
+                        if (keyCode == KeyCode.A)
+                        {
+                            a_count++;
+                            BotControl.Enabled = !BotControl.Enabled;
+                            PClearIntro.msg1 = "BOT CONTROL: " + (BotControl.Enabled ? "ON" : "OFF") + a_count;
+                        }
+
+                        if (!BotControl.Enabled)
+                        {
+                            break;
+                        }
+
+                        if (keyCode == KeyCode.KeypadEnter)
+                        {
+                            UIManager.DestroyAll(false);
+                            UIManager.DestroyAll(false);
+                            NetworkMatch.SetNetworkGameClientMode(NetworkMatch.NetworkGameClientMode.LocalLAN);
+                            MPInternet.MenuPassword = "127.0.0.1";
+                            MenuManager.ChangeMenuState(MenuState.MP_LOCAL_MATCH, false);
+                            UIManager.m_menu_selection = 1;
+                            MenuManager.m_menu_state = MenuState.MP_LOCAL_MATCH;
+                            MenuManager.PlaySelectSound(1f);
+
+                            // ---
+                            /*
+                            var x = MenuState.MP_LOCAL_MATCH;
+                            UIManager.m_menu_selection = 7;
+                            MenuManager.m_mp_lan_match = true;
+                            (MenuManager.m_menu_micro_state == 0 && UIManager.m_menu_selection == 2) // create open match
+                            */
+                        }
+
+                        //Debug.Log("KeyCode down: " + keyCode);
+                        break;
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
 
     [HarmonyPatch(typeof(Controls), "UpdateDevice")]
     class PIgnoreControlsForGame1
@@ -37,8 +104,7 @@ namespace GameMod.MPBotFramework
         // Ignore all input, brutal - but works.
         static bool Prefix()
         {
-
-            return false;
+            return !BotControl.Enabled;
         }
     }
 
@@ -48,7 +114,7 @@ namespace GameMod.MPBotFramework
         // Ignore all input, brutal - but works.
         static bool Prefix()
         {
-            return false;
+            return !BotControl.Enabled;
         }
     }
 
@@ -58,7 +124,7 @@ namespace GameMod.MPBotFramework
         // Ignore all input, brutal - but works.
         static bool Prefix()
         {
-            return false;
+            return !BotControl.Enabled;
         }
     }
 
@@ -69,14 +135,14 @@ namespace GameMod.MPBotFramework
         // Ignore all input brutal - but works.
         static bool Prefix()
         {
-            return false;
+            return !BotControl.Enabled;
         }
     }
 
 
 
     [HarmonyPatch(typeof(GameManager), "OnGUI")]
-    class PClearIntro
+    public class PClearIntro
     {
         private static readonly Texture2D backgroundTexture = Texture2D.whiteTexture;
         private static readonly GUIStyle textureStyle = new GUIStyle { normal = new GUIStyleState { background = backgroundTexture } };
@@ -85,9 +151,12 @@ namespace GameMod.MPBotFramework
 
         private static bool initialized;
 
-        private static string msg = "Key press: NONE";
+        
 
-        private static readonly Array keyCodes = Enum.GetValues(typeof(KeyCode));
+        public static string msg = "Key press: NONE";
+        public static string msg1 = "BOT CONTROL: OFF";
+
+
 
         public static void DrawRect(Rect position, Color color, GUIContent content = null)
         {
@@ -105,8 +174,8 @@ namespace GameMod.MPBotFramework
             //GUI.DrawTexture(new Rect(-1f, -1f, Screen.width, Screen.height), Texture2D.blackTexture, ScaleMode.StretchToFill);
             if (!__instance.m_show_loading_screen)
             {
-                DrawRect(new Rect(0, 0, Screen.width/2, Screen.height), Color.gray);
-                DrawRect(new Rect(Screen.width / 2 , Screen.height / 2, Screen.width / 2, Screen.height / 2), Color.gray);
+                DrawRect(new Rect(0, 0, Screen.width / 2, Screen.height), Color.gray);
+                DrawRect(new Rect(Screen.width / 2, Screen.height / 2, Screen.width / 2, Screen.height / 2), Color.gray);
             }
 
             if (!initialized)
@@ -115,24 +184,11 @@ namespace GameMod.MPBotFramework
                 initialized = true;
             }
 
-            
-
-            if (Input.anyKeyDown)
-            {
-                // TODO: read own input
-                foreach (KeyCode keyCode in keyCodes)
-                {
-                    if (Input.GetKey(keyCode))
-                    {
-                        msg = "Key press: " + keyCode;
-                        //Debug.Log("KeyCode down: " + keyCode);
-                        break;
-                    }
-                }
-            }
 
 
-            GUI.Label(new Rect(25, 25, 100, 30), msg, labelStyle);
+            GUI.Label(new Rect(25, 25, 300, 30), msg, labelStyle);
+
+            GUI.Label(new Rect(25, 55, 300, 30), msg1, labelStyle);
 
 
         }
