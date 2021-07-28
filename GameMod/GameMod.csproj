@@ -116,7 +116,8 @@
     <Compile Include="MPAutomap.cs" />
     <Compile Include="MPAutoSelection.cs" />
     <Compile Include="MPAutoSelectionUI.cs" />
-    <Compile Include="MPBotFramework\PatchBotApplication.cs" />
+    <Compile Include="MPBotFramework\BotMultiplayerAccess.cs" />
+    <Compile Include="MPBotFramework\BotApplication.cs" />
     <Compile Include="MPCeiling.cs" />
     <Compile Include="MPClassic.cs" />
     <Compile Include="MPClientExtrapolation.cs" />
