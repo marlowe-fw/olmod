@@ -94,7 +94,7 @@ namespace GameMod.VersionHandling
 
         private class GitHubRelease 
         {
-            public string tag_name;
+            public string tag_name = "0.0.0";
         }
 
     }
