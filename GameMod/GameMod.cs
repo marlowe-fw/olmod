@@ -5,14 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using GameMod.VersionHandling;
-using Harmony;
+using HarmonyLib;
 using Overload;
 using UnityEngine;
 
 namespace GameMod.Core {
     public class GameMod
     {
-        public static OlmodVersion OlmodVersion = new OlmodVersion();
         private static Version GameVersion;
         public static bool Modded = false;
         public static bool VREnabled = false;
@@ -34,8 +33,8 @@ namespace GameMod.Core {
             Debug.Log("Command line " + String.Join(" ", Environment.GetCommandLineArgs()));
             Config.Init();
             MPInternet.CheckInternetServer();
-            HarmonyInstance.DEBUG = FindArg("-harmonydebug");
-            var harmony = HarmonyInstance.Create("olmod.olmod");
+            Harmony.DEBUG = FindArg("-harmonydebug");
+            var harmony = new Harmony("olmod.olmod");
             try
             {
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
@@ -131,7 +130,7 @@ namespace GameMod.Core {
     {
         private static bool Prefix(ref string __result)
         {
-            __result = GameMod.OlmodVersion.FullVersionString.ToUpperInvariant();
+            __result = OlmodVersion.FullVersionString.ToUpperInvariant();
             return false;
         }
     }

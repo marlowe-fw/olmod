@@ -1,4 +1,4 @@
-## olmod 0.3.9 - Overload mod
+## olmod 0.4.4 - Overload mod
 
 **Community mods for Overload**
 
@@ -27,20 +27,11 @@ This is an unaffiliated, unsupported tool. Use at your own risk.
 
 #### What does it do
 
-- Allows access to the unfinished Monsterball multiplayer mode (with tweaks
-  by terminal).
-  The Monsterball multiplayer mode only works when both server and clients run olmod.
+- Allows access to the unfinished Monsterball multiplayer mode (with tweaks by terminal). The Monsterball multiplayer mode only works when both server and clients run olmod.
 
-- Puts a MP player in observer mode if it uses a pilot name starting with
-  OBSERVER.
-  The observer mode only works when the server and the observer client run olmod.
+- Puts a MP player in observer mode if it uses a pilot name starting with OBSERVER. The observer mode only works when the server and the observer client run olmod.
 
-- Reads projdata.txt / robotdata.txt with custom projectile (weapon) and
-  robot settings. You can extract the stock data from the game with the
-  included tool `olgetdata`. The txt files must be in the same directory as
-  olmod.exe. You can run olgetdata on linux with `mono olgetdata.exe`.
-  They can either go in the olmod directory, or map makers can add them to
-  their map .zip files.
+- Reads projdata.txt / robotdata.txt with custom projectile (weapon) and robot settings. You can extract the stock data from the game with the included tool `olgetdata`. The txt files must be in the same directory as olmod.exe. You can run olgetdata on linux with `mono olgetdata.exe`. They can either go in the olmod directory, or map makers can add them to their map .zip files.
 
 - Adds `frametime` non-cheat code
 
@@ -106,7 +97,7 @@ This is an unaffiliated, unsupported tool. Use at your own risk.
 
 - Improves the primary spawning algorithm.
 
-- Adds weapon and missile autoselect for multiplayer games, by luponix.
+- Adds weapon and missile autoselect, by luponix.
 
 - Adds a multiplayer game option to scale respawn time by team size, by Tobias.
 
@@ -137,6 +128,30 @@ This is an unaffiliated, unsupported tool. Use at your own risk.
 - Removes issue with servers failing to catch up on player inputs in some circumstances, by roncli.
 
 - Smashmouth Overload!
+
+- Updated weapon balance for multiplayer, by zero & roncli.
+
+- Nerf to reduced shader cloaks down to 30% opacity, by Tobias.
+
+- Options to reduce damage blur and damage color intensity, by Tobias.
+
+- Improved spawn algorithm for respawning in anarchy and team anarchy, by roncli.
+
+- Multiplayer match time limit is now selectable in one minute intervals, by Tobias.
+
+- Main menu notification for when there is a new version of olmod, by marlowe.
+
+- Observer mode health bars and damage indicators for pilots, by Tobias.
+
+- In team anarchy, players now glow their team's color when taking damage, by Tobias.
+
+- A joystick curve editor, by luponix.
+
+- In anarchy or team anarchy, a multiplayer game option to turn off assist scoring, by Sirius.
+
+- Custom team colors, by Tobias.
+
+- Disables use of audio for servers, by derhass.
 
 #### How to build
 

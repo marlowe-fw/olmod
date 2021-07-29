@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection.Emit;
-using Harmony;
+using GameMod.VersionHandling;
+using HarmonyLib;
 using Overload;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -282,7 +283,7 @@ namespace GameMod {
             }
             Debug.Log("MPTweaks: sending client capabilites");
             var caps = new Dictionary<string, string>();
-            caps.Add("ModVersion", Core.GameMod.OlmodVersion.FullVersionString);
+            caps.Add("ModVersion", OlmodVersion.FullVersionString);
             caps.Add("Modded", Core.GameMod.Modded ? "1" : "0");
             caps.Add("ModsLoaded", Core.GameMod.ModsLoaded);
             caps.Add("SupportsTweaks", "sniper,jip,nocompress_0_3_6");

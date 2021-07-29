@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Harmony;
+using HarmonyLib;
 using Overload;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -515,7 +515,7 @@ namespace GameMod
                             player.UpdateCurrentMissileName();
                         }
                     }
-
+                    
                     if (oldAmt == 0 && MPAutoSelection.secondarySwapFlag)
                     {
                         if (GameplayManager.IsMultiplayerActive && NetworkMatch.InGameplay() && player.isLocalPlayer)
@@ -541,7 +541,7 @@ namespace GameMod
                             }
                         }
                     }
-
+                    
                     break;
             }
 

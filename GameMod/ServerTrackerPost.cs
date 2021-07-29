@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using Overload;
 using System.Collections;
@@ -33,7 +33,8 @@ namespace GameMod
                 {
                     keepListed = Config.Settings.Value<bool>("keepListed"),
                     name = Config.Settings.Value<string>("serverName"),
-                    notes = Config.Settings.Value<string>("notes")
+                    notes = Config.Settings.Value<string>("notes"),
+                    version = VersionHandling.OlmodVersion.FullVersionString
                 }));
                 yield return new WaitForSecondsRealtime(5 * 60);
             }

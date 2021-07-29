@@ -1,3 +1,64 @@
+v0.4.4 - 2021-07-26
+
+- Fix to v0.4.3's server audio patch that prevented network audio sounds from playing more than once, such as refueling from an energy center.
+
+v0.4.3 - 2021-07-25
+
+- Update to player spawn algorithm to only consider the worst cases, not an average of all the cases.
+- Increase timer of initial primary spawn by 4x, timer between primary spawns by 8x.  This is intended to reverse a side effect caused by the primary spawn algorithm changes from v0.3.5 that made primaries far more common.
+- Invulnerability from red powerups now work properly in race mode. (Thanks, Tobias!)
+- Servers no longer play audio at 0 volume... now they just don't play audio. (Thanks, derhass!)
+- Minor fix to using arrow keys in new advanced multiplayer settings screen. (Thanks, Tobias!)
+
+v0.4.2 - 2021-07-07
+
+- New options under Options -> Multiplayer Options to change the default team colors.  This is a per-pilot setting, which, when set to Custom, will allow you to change the color of your team and of your opponent's team in Team Anarchy, CTF, and Monsterball.  This also affects the CTF flags and related effects, but does NOT affect team-colored lighting in maps. (Thanks, Tobias!)
+- Names are shown in their team color in the kill feed and in chat. (Thanks, Tobias!)
+- When creating a game, multiplayer team options have moved to Advanced Settings -> Team Settings.  You will find Friendly Fire, Team Count, and Scale Respawn to Team Size on that menu. (Thanks, Tobias!)
+- When assists are off, they will not display to observers.
+- Fix bug with spawns in Anarchy/Team Anarchy games on CTF/Monsterball maps.
+- Second minor fix to the Linux build that was broken in 0.4.0. (Thanks, derhass!)
+
+v0.4.1 - 2021-06-30
+
+- In team anarchy, players now glow with their team color when taking damage. (Thanks, Tobias!)
+- Improvement to respawn algorithm, now the server will try to respawn you in such a way that makes it so that you are out of line of sight of opponents and opponents are out of line of sight of you.  Not perfect, especially on smaller maps.
+- New joystick curve editor. (Thanks, luponix!)
+- Autoselect improvements.
+  - Autoselect is now an option under Controls -> Advanced Controls instead of a multiplayer option. (Thanks, luponix!)
+  - Each pilot now has their own autoselect configuration. (Thanks, luponix!)
+  - All pilots, existing and new, will import their autoselect configuration from the current pre-0.4.1 autoselect configuration until you delete the file AutoSelect-Config.txt from your Overload data directory.
+  - You can now reset autoselect options to their default.
+- Custom doors now work on the automap. (Thanks, Arne!)
+- New advanced multiplayer game setting to turn off anarchy assist scoring (ie: only kills count).  (Thanks, Sirius!)
+- Now sends full version string to the tracker.
+- Minor fix to the Linux build that was broken in 0.4.0. (Thanks, Arne!)
+
+v0.4.0 - 2021-05-10
+
+Features: 
+
+- Change default balance settings for multiplayer games only: (Thanks to zero for coordinating, and all the pilots who tested this!)
+  - Driller direct damage -24.18% (Translates to about -17% driller damage overall)
+  - Crusher damage -20%
+  - Flak direct damage -20% (Translates to about -16% flak damage overall)
+  - Cyclone damage -5%
+  - Reflex damage +15%
+  - Hunter direct damage -47.5% (Translates to about -21% hunter damage overall)
+  - Hunter homing strength -10%
+  - Hunter speed -12.5% (this is not a recent change, but it's listed to make clear that it's still slower than vanilla Overload)
+- Reduced shader cloak is now at 30% opacity to improve it and bring it closer to normal shader cloak. (Thanks, Tobias!)
+- New settings to change damage blur and damage color intensity. (Thanks, Tobias!)
+- Improved respawn algorithm for anarchy and team anarchy, it no longer disapproves of respawn points more than 80 units away, and now considers walls if the map isn't using inverted cubes.
+- Multiplayer match time limit is now configurable from 0 to 20 minutes in one minute increments. (Thanks, Tobias!)
+- Observer mode health bars and damage indicators for pilots. (Thanks, Tobias!)
+- Notification on main screen when there is a new version of olmod available. (Thanks, marlowe!)
+
+Bug fixes:
+
+- robotdata.txt is now properly read in custom map .zip files. (Thanks, Tobias!)
+- Windows will no longer crash on client/server LAN support activation when more than 2 DNS servers are configured. (Thanks, Arne!)
+
 v0.3.9 - 2020-03-31
 
 - Fix for runaway debugging in logs.
